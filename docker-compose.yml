@@ -1,3 +1,7 @@
+networks:
+  app-network:
+    driver: bridge
+
 services:
   zookeeper:
     image: confluentinc/cp-zookeeper:7.9.0
@@ -7,12 +11,15 @@ services:
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME: 2000
+    networks:
+      - app-network
 
   kafka:
     image: confluentinc/cp-kafka:7.3.2
     container_name: kafka
     ports:
       - "9092:9092"
+      - "29092:29092"   # optional: for host access
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
@@ -22,6 +29,10 @@ services:
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
     depends_on:
       - zookeeper
+    volumes:
+      - ./kafka-data:/var/lib/kafka/data
+    networks:
+      - app-network
 
   postgres:
     image: postgres:15
@@ -34,6 +45,8 @@ services:
       POSTGRES_DB: catalog_db
     volumes:
       - ./postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - app-network
 
   pgadmin:
     image: dpage/pgadmin4
@@ -41,16 +54,17 @@ services:
     ports:
       - "5050:80"
     environment:
-      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_EMAIL: admin@local.com
       PGADMIN_DEFAULT_PASSWORD: admin
     depends_on:
       - postgres
+    networks:
+      - app-network
 
   catalog-service:
     build:
       context: ../catalog-service
       dockerfile: CatalogDockerfile
-
     container_name: catalog-service
     depends_on:
       - kafka
@@ -62,3 +76,7 @@ services:
       SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
     ports:
       - "8081:8081"
+    volumes:
+      - ./logs/catalog:/app/logs
+    networks:
+      - app-network

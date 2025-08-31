@@ -7,7 +7,7 @@ REM *******************************************
 REM *********   Docker Maintenance   **********
 REM *******************************************
 
-call :printHeader "Stopping & Removing Containers"
+call :printHeader "Stopping and Removing Containers"
 docker-compose down -v
 
 REM Delete local data folders if exist
@@ -29,9 +29,9 @@ exit /b 0
 :printHeader
 echo.
 echo ****************************************************************
-echo **********                                              **********
-echo    %~1
-echo **********                                              **********
+echo **********                                            **********
+echo    		%~1
+echo **********                                            **********
 echo ****************************************************************
 echo.
 exit /b 0
