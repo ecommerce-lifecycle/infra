@@ -102,7 +102,9 @@ If you want to change pgAdmin login, update values in `docker-compose.yml` under
     If Kafka/Zookeeper mismatch → delete state and restart:
 
     ```bash
-    rm -rf infra/kafka-data infra/zookeeper-data
+    rmdir /s /q infra\kafka-data
+    rmdir /s /q infra\zookeeper-data
+    rmdir /s /q infra\postgres-data
     ```
 
 ---
