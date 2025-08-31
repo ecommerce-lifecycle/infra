@@ -35,7 +35,7 @@ This repo orchestrates the full local stack:
 
 ---
 
-## Usage and Maintainence
+## Usage and maintenance
 
 ### Start all
 ```bash
@@ -69,11 +69,10 @@ docker compose down -v            # also remove DB volumes
 
 ---
 
+## 📦 Database Access (pgAdmin)
 
 👉 **Note**:
 If you want to change pgAdmin login, update values in `docker-compose.yml` under `PGADMIN_DEFAULT_EMAIL` & `PGADMIN_DEFAULT_PASSWORD`.
-
-## 📦 Database Access (pgAdmin)
 
 * Open [http://localhost:5050](http://localhost:5050)
 
@@ -90,9 +89,7 @@ If you want to change pgAdmin login, update values in `docker-compose.yml` under
   * User: `postgres`
   * Password: `postgres`
 
-
 ---
-
 
 ## Troubleshooting
 
@@ -101,15 +98,12 @@ If you want to change pgAdmin login, update values in `docker-compose.yml` under
 * **`localhost:8081 refused`** → Run `docker compose ps` → verify container is up & port 8081 exposed.
 * **pgAdmin login fails** → Use credentials from `docker-compose.yml`.
 * **Kafka/Zookeeper retries** → Wait, broker eventually connects.
+* **Kafka Cluster ID issue**
+    If Kafka/Zookeeper mismatch → delete state and restart:
 
-**Kafka Cluster ID issue**
-If Kafka/Zookeeper mismatch → delete state and restart:
-
-```bash
-rm -rf infra/kafka-data infra/zookeeper-data
-docker compose down -v
-docker compose up -d --build
-```
+    ```bash
+    rm -rf infra/kafka-data infra/zookeeper-data
+    ```
 
 ---
 
