@@ -23,6 +23,15 @@ This repo orchestrates the full local stack:
 
 ---
 
+## 🛠️ Technologies & Tools Used
+
+* **PostgreSQL 15** – Relational Database  
+* **Kafka (Confluent Platform)** – Event streaming & messaging  
+* **Docker & Docker Compose** – Containerization & orchestration  
+* **pgAdmin4** – PostgreSQL database management (UI)  
+* **Eclipse STS / IntelliJ IDEA / VS Code** – IDEs for development (choose any)  
+
+---
 ## Services & Ports
 
 | Service         | URL / Port                                                |
@@ -136,4 +145,3 @@ docker-restart.bat
 ```
 
 ---
-
