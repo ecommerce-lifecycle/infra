@@ -12,10 +12,12 @@ This repo orchestrates the full local stack:
 │
 ├── catalog-service/
 │   ├── CatalogDockerfile
+│   ├── wait-for-it.sh
 │   └── (Spring Boot code)
 │
 └── infra/
     ├── docker-compose.yml
+    ├── docker-restart.bat
     └── postgres/
         └── init.sql   <-- seed data
 
@@ -23,6 +25,15 @@ This repo orchestrates the full local stack:
 
 ---
 
+## 🛠️ Technologies & Tools Used
+
+* **PostgreSQL 16** – Relational Database  
+* **Kafka (Confluent Platform)** – Event streaming & messaging  
+* **Docker & Docker Compose** – Containerization & orchestration  
+* **pgAdmin4** – PostgreSQL database management (UI)  
+* **Eclipse STS / IntelliJ IDEA / VS Code** – IDEs for development (choose any)  
+
+---
 ## Services & Ports
 
 | Service         | URL / Port                                                |
@@ -91,6 +102,19 @@ If you want to change pgAdmin login, update values in `docker-compose.yml` under
 
 ---
 
+### 🖥️ Local Database Access (outside container)
+
+You can also connect directly using your **local pgAdmin4 desktop app** or **psql shell**:
+
+* Connection details:
+  * Host: `localhost`
+  * Port: `5432`
+  * Database: `catalog_db`
+  * Username: `postgres`
+  * Password: `postgres`
+  
+---
+
 ## Troubleshooting
 
 * **Docker Desktop not running** → Start Docker Desktop first.
@@ -137,3 +161,15 @@ docker-restart.bat
 
 ---
 
+### ⏳ Wait-for-it Script
+
+The `wait-for-it.sh` script ensures that dependent services (like PostgreSQL) are up
+before the `catalog-service` container starts.  
+
+- It is automatically copied into the catalog container via its Dockerfile.  
+- Uses **LF line endings** (Linux format). If you are on Windows, run:
+
+```bash
+dos2unix wait-for-it.sh
+
+---
