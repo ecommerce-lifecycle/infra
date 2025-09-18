@@ -171,5 +171,6 @@ before the `catalog-service` container starts.
 
 ```bash
 dos2unix wait-for-it.sh
+```
 
 ---
